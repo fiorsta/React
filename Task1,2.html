@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Task 1, 2</title>
+</head>
+
+<body>
+    <script>
+        /*
+            Метод, вызвающий функцию <callback> <times> раз
+            @param <callback> function функция
+            @param <times> number число
+        */
+
+        function loop(times = 0, callback = null) {
+            while (times != 0) {
+                callback();
+                times--;
+            }
+        }
+
+        let count = 2;
+        let func = () => {
+            console.log('hello');
+        };
+
+        loop(count, func);
+
+        /*
+            Метод, вычисляющий площадь простой фигуры: круг, квадрат/прямоугольник, треугольник, параллелограм, трапеция.
+            По формулам с минимальными входными данными.
+            @param <figure> string название фигуры
+            @param <...input> array of numbers необходимые данные для вычисления
+            @return object {
+                            area: вычисленная площадь,
+                            figure: название фигуры,
+                            input: входные параметры
+                           }
+        */
+
+        const PI = 3.14;
+
+        function calculateArea(figure, ...input) {
+
+            let areaFigure = {
+                area: 0,
+                figure: figure,
+                input: {}
+            };
+
+            switch (figure) {
+                case 'circle':
+                    {
+                        areaFigure.input.radius = input[0];
+                        areaFigure.area = PI * input[0] * input[0];
+                        break;
+                    }
+                case 'square':
+                case 'rectangle':
+                    {
+                        areaFigure.input.lenghtOfSide = input[0];
+                        
+                        if ((input[0] == input[1]) || (input[1] == undefined)) {
+                            areaFigure.area = input[0] * input[0];
+                        } else {
+                            areaFigure.input.widthOfSide = input[1];
+                            areaFigure.area = input[0] * input[1];
+                        }
+                        break;
+                    }
+                case 'triangle':
+                case 'parallelogram':
+                    {
+                        areaFigure.input.base = input[0];
+                        areaFigure.input.hightToBase = input[1];
+                                                
+                        if (figure == 'triangle'){
+                            areaFigure.area = input[0] * input[1] / 2;
+                        } else{
+                            areaFigure.area = input[0] * input[1];
+                        }
+                        break;
+                    }
+                case 'trapezoid':
+                    {
+                        areaFigure.input.smallBase = input[0];
+                        areaFigure.input.largeBase = input[1];
+                        areaFigure.input.hightToLargeBase = input[2];
+                        areaFigure.area = (input[0] + input[1]) * input[2] / 2;
+                        break;
+                    }
+                default:{
+                    console.log("I don't know this figure.");
+                    areaFigure=null;
+                }
+
+            }
+            return areaFigure;
+        }
+
+        //Круг. Параметр - радиус
+        console.log(calculateArea('circle', 5));
+        //Квадрат/прямоугольник. Параметры - длина, ширина
+        console.log(calculateArea('rectangle', 6, 5));
+        console.log(calculateArea('square', 5));
+        console.log(calculateArea('square', 7, 7));
+        //Треугольник. Параметры - основание, высота
+        console.log(calculateArea('triangle', 7, 5));
+        //Параллелограм. Параметры - основание, высота
+        console.log(calculateArea('parallelogram', 7, 5));
+        //Трапеция. Параметры - меньшее основание, большее основание, высота
+        console.log(calculateArea('trapezoid', 5, 7, 3));
+
+    </script>
+</body>
+
+</html>
